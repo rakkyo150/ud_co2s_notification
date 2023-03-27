@@ -80,7 +80,7 @@ impl UDCO2S {
                 };
 
                 let now: DateTime<Local> = Local::now();
-                if now.hour() == 0 {
+                if now.hour() == 0 && now.minute() == 0 {
                     all_data = vec![];
                 }
 

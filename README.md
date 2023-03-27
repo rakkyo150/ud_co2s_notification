@@ -1,6 +1,6 @@
 # ud_co2s_notification
 UD-CO2Sの酸素濃度値とその推移を定期的にDiscordに通知できるスクリプト  
-現状では0時台にデータをリセットして、そこから実行するごとにデータ生成＆グラフ作成を行う処理になっています。  
+現状では0時0分にデータをリセットして、そこから実行するごとにデータ生成＆グラフ作成を行う処理になっています。  
 
 ## 注意
 [こちら](https://github.com/rakkyo150/ud-co2s-with-raspberry-pi-and-alexa)と同じく、https://scrapbox.io/oquno/UD-CO2S や https://gist.github.com/oquno/d07f6dbf8cc760f2534d9914efe79801 を参考にしましたが、正直理解の程度は低いです。  
