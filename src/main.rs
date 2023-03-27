@@ -57,30 +57,38 @@ impl UDCO2S {
                         m["tmp"].parse::<f32>().unwrap()
                 )};
 
-                println!("{}", m["co2"].parse::<i32>().unwrap());
+                println!("{}", obj.status.co2ppm);
                 
-                let file = File::open(log_file)?;
-                let reader = BufReader::new(&file);
-                let response = serde_json::from_reader(reader);
-                all_data = if let Ok(response_) = response{
-                    response_
-                }else if let Err(e) = response{
-                    println!("Error: {}",e);
-                    vec![]
-                }else{
-                    println!("Weird Error");
-                    vec![]
+                let file_open_result = File::open(log_file);
+                match file_open_result{
+                    Ok(file_open) => {
+                        let reader = BufReader::new(&file_open);
+                        let response = serde_json::from_reader(reader);
+                        all_data = if let Ok(response_) = response{
+                            response_
+                        }else if let Err(e) = response{
+                            println!("Error: {}",e);
+                            vec![]
+                        }else{
+                            println!("Weird Error");
+                            vec![]
+                        };
+                    },
+                    Err(e) => {
+                        println!("{}", e);
+                    }
                 };
 
-                all_data.push(obj);
-                let now: DateTime<Local> = Local::now(); // 現在の日時を取得
+                let now: DateTime<Local> = Local::now();
                 if now.hour() == 0 {
                     all_data = vec![];
                 }
 
-                let mut file = File::create(log_file)?;
+                all_data.push(obj);
 
-                file.write_all(serde_json::to_string(&all_data).unwrap().as_bytes())?;
+                let mut file_create = File::create(log_file)?;
+
+                file_create.write_all(serde_json::to_string(&all_data).unwrap().as_bytes())?;
             }
         }
         
